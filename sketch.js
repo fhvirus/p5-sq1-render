@@ -1,3 +1,41 @@
+const name = {
+	'44'		:'eeceeeecee',
+	'53'		:'eeceeeceee',
+	'62'		:'eeeceeceee',
+	'71'		:'eeececeeee',
+	'8'			:'eeeecceeee',
+	'222'		:'ceeceecee',
+	'33'		:'eeeceeecc',
+	'321'		:'eeeceecec',
+	'312'		:'eeececeec',
+	'42'		:'eeeeceecc',
+	'24'		:'eeceeeecc',
+	'411'		:'eeeececec',
+	'51'		:'ececceeee',
+	'15'		:'eeeeccece',
+	'6'			:'eeeeeeccc',
+	'square'	:'ecececec',
+	'kite'		:'ececcece',
+	'barrel'	:'ceecceec',
+	'shield'	:'ccceecee',
+	'lf'		:'ceeccece',
+	'rf'		:'ececceec',
+	'lp'		:'eeececcc',
+	'rp'		:'ccceceee',
+	'mushroom'	:'eeccecce',
+	'scallop'	:'eeccccee',
+	'pair'		:'eeccccc',
+	'perp'		:'ececccc',
+	'para'		:'ccceecc',
+	'star'		:'cccccc',
+};
+function isce(s){
+	var ans = true;
+	for(var i = 0; i < s.length; ++i)
+		ans &= (s[i] == 'c' || s[i] == 'e');
+	return ans;
+}
+
 var rad = 100;
 var dia = rad * (1 + Math.sqrt(3)) / 2;
 var ang = Math.PI / 6;
@@ -80,20 +118,30 @@ function setup() {
 	dface = new SQFace(450, 200, rad, dsl, color(0, 131, 255), 'ecececec');
 	update();
 
-	let ufi = createInput('cececece');
+	let ufi = createInput('square');
 	ufi.position(0, 0);
 	ufi.size(100);
-	ufi.input(function(){ uface.state = this.value(); update();});
+	ufi.input(function(){
+		if(this.value() in name) uface.state = name[this.value()];
+		else if(isce(this.value())) uface.state = this.value();
+		else uface.state = '';
+		update();
+	});
 
 	let urt = createButton('↻');
 	urt.position(110, 0);
 	urt.size(20);
 	urt.mousePressed(function(){ uface.rotateCW(); update()});
 
-	let dfi = createInput('ecececec');
+	let dfi = createInput('square');
 	dfi.position(140, 0);
 	dfi.size(100);
-	dfi.input(function(){ dface.state = this.value(); update();});
+	dfi.input(function(){
+		if(this.value() in name) dface.state = name[this.value()];
+		else if(isce(this.value())) dface.state = this.value();
+		else dface.state = '';
+		update();
+	});
 
 	let drt = createButton('↻');
 	drt.position(250, 0);
