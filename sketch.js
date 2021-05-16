@@ -41,6 +41,9 @@ var dia = rad * (1 + Math.sqrt(3)) / 2;
 var ang = Math.PI / 6;
 var usl = Math.PI * -5 / 12;
 var dsl = Math.PI * -7 / 12;
+var img; function preload(){
+	img = loadImage('sticker.png');
+}
 
 function edge(rot){
 	beginShape();
@@ -75,6 +78,10 @@ class SQFace{
 		this.state = ns;
 	}
 	render(){
+		if(this.state == ''){
+			image(img, this.x - 120, this.y - 100);
+			return;
+		}
 		translate(this.x, this.y);
 		strokeWeight(3);
 		strokeCap(ROUND);
