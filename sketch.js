@@ -70,12 +70,34 @@ class SQFace{
 		this.slicol = slicol;
 		this.state = state;
 	}
+	is_sliceable(){
+		var cur = 0;
+		for(var i = 0; i < this.state.length; ++i){
+			if(this.state[i] == 'e') cur += 1;
+			else if(this.state[i] == 'c') cur += 2;
+			if(cur == 6) return true;
+		}
+		return false;
+	}
 	rotateCW(){
 		var ns = '';
-		ns += this.state[this.state.length - 1];
-		for(var i = 0; i < this.state.length - 1; ++i)
-			ns += this.state[i];
-		this.state = ns;
+		do{
+			ns = '';
+			ns += this.state[this.state.length - 1];
+			for(var i = 0; i < this.state.length - 1; ++i)
+				ns += this.state[i];
+			this.state = ns;
+		} while(!this.is_sliceable());
+	}
+	rotateCCW(){
+		var ns = '';
+		do{
+			ns = '';
+			for(var i = 1; i < this.state.length; ++i)
+				ns += this.state[i];
+			ns += this.state[0];
+			this.state = ns;
+		} while(!this.is_sliceable());
 	}
 	render(){
 		if(this.state == ''){
@@ -119,6 +141,19 @@ function update(){
 	dface.render();
 }
 
+function slice(){
+	var ua, ub, da, db;
+
+	ua = '';
+	da = '';
+	ub = uface.state;
+	db = dface.state;
+
+	uface.state = da + ub;
+	dface.state = ua + db;
+	update();
+}
+
 function setup() {
 	createCanvas(600, 400);
 	uface = new SQFace(150, 200, rad, usl, color(255, 204, 0), 'cececece');
@@ -127,7 +162,7 @@ function setup() {
 
 	let ufi = createInput('square');
 	ufi.position(0, 0);
-	ufi.size(100);
+	ufi.size(80);
 	ufi.input(function(){
 		if(this.value() in name) uface.state = name[this.value()];
 		else if(isce(this.value())) uface.state = this.value();
@@ -135,14 +170,18 @@ function setup() {
 		update();
 	});
 
-	let urt = createButton('↻');
-	urt.position(110, 0);
-	urt.size(20);
-	urt.mousePressed(function(){ uface.rotateCW(); update()});
+	let ucw = createButton('↻');
+	ucw.position(90, 0);
+	ucw.size(20);
+	ucw.mousePressed(function(){ uface.rotateCW(); update()});
+	let uccw = createButton('↺');
+	uccw.position(120, 0);
+	uccw.size(20);
+	uccw.mousePressed(function(){ uface.rotateCCW(); update()});
 
 	let dfi = createInput('square');
-	dfi.position(140, 0);
-	dfi.size(100);
+	dfi.position(150, 0);
+	dfi.size(80);
 	dfi.input(function(){
 		if(this.value() in name) dface.state = name[this.value()];
 		else if(isce(this.value())) dface.state = this.value();
@@ -150,14 +189,22 @@ function setup() {
 		update();
 	});
 
-	let drt = createButton('↻');
-	drt.position(250, 0);
-	drt.size(20);
-	drt.mousePressed(function(){ dface.rotateCW(); update()});
+	let dcw = createButton('↻');
+	dcw.position(240, 0);
+	dcw.size(20);
+	dcw.mousePressed(function(){ dface.rotateCW(); update()});
+	let dccw = createButton('↺');
+	dccw.position(270, 0);
+	dccw.size(20);
+	dccw.mousePressed(function(){ dface.rotateCCW(); update()});
 
 	let exbut = createButton('Export');
-	exbut.position(280, 0);
+	exbut.position(300, 0);
 	exbut.mousePressed(expo);
+
+	let slicebut = createButton('Slice!');
+	slicebut.position(350, 0);
+	slicebut.mousePressed(slice);
 }
 
 function draw() {}
