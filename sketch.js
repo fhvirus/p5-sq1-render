@@ -144,10 +144,21 @@ function update(){
 function slice(){
 	var ua, ub, da, db;
 
-	ua = '';
-	da = '';
-	ub = uface.state;
-	db = dface.state;
+	ua = ub = '';
+	da = db = '';
+
+	for(let i = 0, cur = 0; i < uface.state.length; ++i){
+		if(cur < 6) ua += uface.state[i];
+		else ub += uface.state[i];
+		if(uface.state[i] == 'e') cur += 1;
+		else cur += 2;
+	}
+	for(let i = 0, cur = 0; i < dface.state.length; ++i){
+		if(cur < 6) da += dface.state[i];
+		else db += dface.state[i];
+		if(dface.state[i] == 'e') cur += 1;
+		else cur += 2;
+	}
 
 	uface.state = da + ub;
 	dface.state = ua + db;
@@ -155,9 +166,9 @@ function slice(){
 }
 
 function setup() {
-	createCanvas(600, 400);
-	uface = new SQFace(150, 200, rad, usl, color(255, 204, 0), 'cececece');
-	dface = new SQFace(450, 200, rad, dsl, color(0, 131, 255), 'ecececec');
+	createCanvas(400, 600);
+	uface = new SQFace(200, 160, rad, usl, color(255, 204, 0), 'cececece');
+	dface = new SQFace(200, 440, rad, dsl, color(0, 131, 255), 'ecececec');
 	update();
 
 	let ufi = createInput('square');
