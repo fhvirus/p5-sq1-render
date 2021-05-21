@@ -181,14 +181,14 @@ function setup() {
 		update();
 	});
 
-	let ucw = createButton('↻');
-	ucw.position(90, 0);
-	ucw.size(20);
-	ucw.mousePressed(function(){ uface.rotateCW(); update()});
 	let uccw = createButton('↺');
-	uccw.position(120, 0);
+	uccw.position(90, 0);
 	uccw.size(20);
 	uccw.mousePressed(function(){ uface.rotateCCW(); update()});
+	let ucw = createButton('↻');
+	ucw.position(120, 0);
+	ucw.size(20);
+	ucw.mousePressed(function(){ uface.rotateCW(); update()});
 
 	let dfi = createInput('square');
 	dfi.position(150, 0);
@@ -200,14 +200,14 @@ function setup() {
 		update();
 	});
 
-	let dcw = createButton('↻');
-	dcw.position(240, 0);
-	dcw.size(20);
-	dcw.mousePressed(function(){ dface.rotateCW(); update()});
 	let dccw = createButton('↺');
-	dccw.position(270, 0);
+	dccw.position(240, 0);
 	dccw.size(20);
 	dccw.mousePressed(function(){ dface.rotateCCW(); update()});
+	let dcw = createButton('↻');
+	dcw.position(270, 0);
+	dcw.size(20);
+	dcw.mousePressed(function(){ dface.rotateCW(); update()});
 
 	let exbut = createButton('Export');
 	exbut.position(300, 0);
